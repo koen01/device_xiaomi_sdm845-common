@@ -54,9 +54,13 @@ PRODUCT_COPY_FILES += \
 # HIDL
 PRODUCT_PACKAGES += \
     android.hidl.base@1.0 \
-    android.hidl.base@1.0_system \
-    android.hidl.manager@1.0 \
-    android.hidl.manager@1.0_system
+    android.hidl.manager@1.0
+
+# Hotspot
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/hostapd.accept:system/etc/hostapd/hostapd.accept \
+    $(LOCAL_PATH)/configs/hostapd_default.conf:system/etc/hostapd/hostapd_default.conf \
+    $(LOCAL_PATH)/configs/hostapd.deny:system/etc/hostapd/hostapd.deny
 
 # IFAA manager
 PRODUCT_PACKAGES += \
@@ -89,6 +93,9 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     netutils-wrapper-1.0
 
+# Performance
+include vendor/qcom/common/qti-vendor.mk
+
 # Power
 PRODUCT_PACKAGES += \
     power.qcom:64
@@ -108,13 +115,6 @@ PRODUCT_PACKAGES += \
 # Recovery
 PRODUCT_PACKAGES += \
     librecovery_updater_xiaomi
-
-# Telephony
-PRODUCT_PACKAGES += \
-    telephony-ext
-
-PRODUCT_BOOT_JARS += \
-    telephony-ext
 
 # Seccomp policy
 PRODUCT_COPY_FILES += \
