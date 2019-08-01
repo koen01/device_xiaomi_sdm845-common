@@ -4,6 +4,9 @@ on init
     mount none /system/lib64/hw/power.qcom.so /vendor/lib64/hw/power.qcom.so bind
     mount none /system/lib64/soundfx/libvolumelistener.so /vendor/lib64/soundfx/libvolumelistener.so bind
     mount none /system/lib/soundfx/libvolumelistener.so /vendor/lib/soundfx/libvolumelistener.so bind
+    mount none /system/etc/media_codecs.xml /vendor/etc/media_codecs.xml bind
+    mount none /system/etc/media_codecs_performance.xml /vendor/etc/media_codecs_performance.xml bind
+    mount none /system/etc/media_profiles.xml /vendor/etc/media_profiles.xml bind
 
     # Boot time FS tune
     write /sys/block/sda/queue/iostats 0
@@ -45,6 +48,9 @@ on property:init.svc.vendor.misys=running
 on property:init.svc.vendor.misys@2.0=running
     stop vendor.misys@2.0
 
+on property:init.svc.tcpdump=running
+    stop tcpdump
+
 on property:persist.vendor.sys.ssr.enable_ramdumps=1
     start vendor.ss_ramdump_local
 
@@ -68,3 +74,6 @@ on property:sys.boot_completed=1
     write /sys/block/dm-1/queue/read_ahead_kb 128
     write /sys/block/dm-2/queue/read_ahead_kb 128
     write /sys/block/dm-3/queue/read_ahead_kb 128
+
+on property:vold.decrypt=trigger_restart_framework
+    restart vendor.audio-hal-2-0
